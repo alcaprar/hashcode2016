@@ -1,9 +1,9 @@
 import re
 from .utils import *
 
+
 class LinearSolver:
-    single_cell_expression = '(\.#\.){1,1}'
-    multiple_cell_expression = '(\.[#]{2,}\.)'
+    multiple_cell_expression = '#{1,}'
 
     def __init__(self, image):
         self.image = image
@@ -15,20 +15,22 @@ class LinearSolver:
         return op_list
 
     def print_by_column(self):
-        pass
-        # for index, col in enumerate(self.image.transpose()):
-        #     op_list = []
-        #     op_list = op_list + self.__print_row(col, index)
-        # return op_list
+        op_list = []
+        for col_index in range(1,len(self.image[0])):
+            col = []
+            for row in self.image:
+                for c,e in enumerate(row):
+                    if c == col_index:
+                        col.append(e)
+            op_list = op_list + self.__print_row(col, col_index)
+        return op_list
 
     def __print_row(self, row, index):
         op_list = []
         string_line = ''.join(row)
 
-        for m in re.finditer(self.single_cell_expression, string_line):
-            op_list.append(square_instruction(index, m.start() + 1, 0))
         for m in re.finditer(self.multiple_cell_expression, string_line):
-            op_list.append(line_instruction(index, m.start() + 1, index, m.end() - 2))
+            op_list.append(line_instruction(index, m.start(), index, m.end() - 1))
 
         return op_list
 
@@ -36,9 +38,7 @@ class LinearSolver:
         op_list = []
         string_line = ''.join(col)
 
-        for m in re.finditer(self.single_cell_expression, string_line):
-            op_list.append(square_instruction(m.start() + 1, index, 0))
         for m in re.finditer(self.multiple_cell_expression, string_line):
-            op_list.append(line_instruction(m.start() + 1, index, m.end() - 1, index))
+            op_list.append(line_instruction(m.start(), index, m.end() - 1, index))
 
         return op_list
