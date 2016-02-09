@@ -8,8 +8,8 @@ if __name__ == '__main__':
     solver = hashcode.LinearSolver(data)
 
     op_list = solver.print_by_row()
+    print(len(op_list))
     [print(op) for op in op_list]
-    print('''Eseguite %d operazioni''' % len(op_list))
 
 
     # op_list = solver.print_by_column()

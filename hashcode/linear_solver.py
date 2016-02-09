@@ -28,7 +28,7 @@ class LinearSolver:
         for m in re.finditer(self.single_cell_expression, string_line):
             op_list.append(square_instruction(index, m.start() + 1, 0))
         for m in re.finditer(self.multiple_cell_expression, string_line):
-            op_list.append(line_instruction(index, m.start() + 1, index, m.end() - 1))
+            op_list.append(line_instruction(index, m.start() + 1, index, m.end() - 2))
 
         return op_list
 
