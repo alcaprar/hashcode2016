@@ -7,11 +7,12 @@ if __name__ == '__main__':
     data = hashcode.read_image_description(sys.argv[1])
     solver = hashcode.LinearSolver(data)
 
-    op_list = solver.print_by_row()
-    print(len(op_list))
-    [print(op) for op in op_list]
+    row_op = solver.print_by_row()
+    col_op = solver.print_by_column()
+    if len(row_op) < len(col_op):
+        ops = row_op
+    else:
+        ops = col_op
 
-
-    # op_list = solver.print_by_column()
-    # [print(op) for op in op_list]
-    # print('''Eseguite %d operazioni''' % len(op_list))
+    print(len(ops))
+    [print(op) for op in ops]
