@@ -2,8 +2,7 @@ import re
 from .utils import *
 
 class LinearSolver:
-    single_cell_expression = '(\.#\.){1,1}'
-    multiple_cell_expression = '(\.[#]{2,}\.)'
+    multiple_cell_expression = '#{1,}'
 
     def __init__(self, image):
         self.image = image
@@ -25,10 +24,8 @@ class LinearSolver:
         op_list = []
         string_line = ''.join(row)
 
-        for m in re.finditer(self.single_cell_expression, string_line):
-            op_list.append(square_instruction(index, m.start() + 1, 0))
         for m in re.finditer(self.multiple_cell_expression, string_line):
-            op_list.append(line_instruction(index, m.start() + 1, index, m.end() - 2))
+            op_list.append(line_instruction(index, m.start(), index, m.end() - 1))
 
         return op_list
 
@@ -36,8 +33,6 @@ class LinearSolver:
         op_list = []
         string_line = ''.join(col)
 
-        for m in re.finditer(self.single_cell_expression, string_line):
-            op_list.append(square_instruction(m.start() + 1, index, 0))
         for m in re.finditer(self.multiple_cell_expression, string_line):
             op_list.append(line_instruction(m.start() + 1, index, m.end() - 1, index))
 

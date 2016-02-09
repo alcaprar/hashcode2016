@@ -19,3 +19,6 @@ def square_instruction(r, c, s):
 
 def line_instruction(r1, c1, r2, c2):
     return ('''PAINT_LINE %d %d %d %d''' % (r1, c1, r2, c2))
+
+def erase_instruction(r, c):
+    return ('''ERASE_CELL %d %d''' % (r,c))
